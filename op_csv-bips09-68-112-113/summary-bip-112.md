@@ -27,24 +27,14 @@ Alice can fund a multi-signature contract with a clause s.t.s.
         <Alice's pubkey> CHECKSIGVERIFY
     ENDIF
 
-#### Revocable pathways in payment channels
+#### Payment Channels
 
   A payment channel is a protocol where signatures for a new version of a spend transaction are exchanged. 
-  This is done multiple times until the channel is settled, instead thof frequently updating the blockchain. 
+  This is done multiple times until the channel is settled, instead of frequently updating the blockchain. 
  
   The channel defines the contract under which users interact, so details will change from contract to contract. 
-  
-  Imagine Alice has funded a movie website with 1 BTC, and occasionally buys movies. 
-  She can settle once per month, but can download as much as the channel allows, as often as she likes.  
    
-  The website needs to know it will get paid, but Alice needs to be equally sure about the safety of her funds
-  should the website become non-cooperative. 
-
-#### Lightning Network
-
- LN makes use of the above. The protocol is defined and is enforcable for both sides of the channel. 
-  
-  To open a channel, we generate a script similar to the following where funds are sent. 
+  To open a channel, we generate a script similar to the following, where funds will be sent. 
   
   2 [Alice] [Bob] 2 OP_CHECKMULTISIG
   
@@ -65,8 +55,8 @@ Alice can fund a multi-signature contract with a clause s.t.s.
       ENDIF
       CHECKSIG
       
-  The transactions remain unsigned for now.. 
-      
+  The transactions are kept secret, and left unsigned until the channel needs to be closed. 
+  
   Any time we update the state, the R values must be revealed to the other (easily checked),
   and new commitment transactions are created against the funds locked in the contract address. 
   
@@ -77,3 +67,5 @@ Alice can fund a multi-signature contract with a clause s.t.s.
   Bob will notice the channel closed early, but also possesses the code Alice used in that same commitment. 
   He can spend the funds immediately, whereas Alice was forced to wait for 24 hours. 
   
+  If both parties are cooperating, they will continue to modify the channel without making any
+  transactions on the blockchain. 
